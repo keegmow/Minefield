@@ -20,26 +20,27 @@ public class MinefieldApp {
 			column = 9;
 			mineTotal = 10;
 			System.out.println("There are 10 mines to flag, Good Luck!");
-		}
-		if (level.equalsIgnoreCase("I"))
+		} else if (level.equalsIgnoreCase("I"))
 		{
 			row = 16;
 			column = 16;
 			mineTotal = 40;
 			System.out.println("There are 40 mine to flag, Good Luck!");
-		}
-		if (level.equalsIgnoreCase("E"))
+		} else if (level.equalsIgnoreCase("E")) 
 		{
 			row = 16;
 			column = 30;
 			mineTotal = 99;
 			System.out.println("There are 99 mine to flag, Good Luck!");
+		} else {
+			System.out.println("Incorrect option. Try again later.");
+			return;
 		}
 		Minefield gameGrid = new Minefield(row, column, mineTotal);
 		String play;
 			do {
-				int columnInt = Validator.getInt(scan, "Please insert a column between 1 - " + column + ": ", 1, column)-1;
-				int rowInt = Validator.getInt(scan, "Please insert a row between 1 - " + row + ": ", 1, row)-1;
+				int columnInt = Validator.getInt(scan, "Select a column between 1 - " + column + ": ", 1, column)-1;
+				int rowInt = Validator.getInt(scan, "Select a row between 1 - " + row + ": ", 1, row)-1;
 				System.out.print("Do you want to flag/unflag the cell? (type y/n)");
 				boolean flag = scan.nextLine().equalsIgnoreCase("y");
 				play = gameGrid.uncoverSquare(rowInt, columnInt, flag);
