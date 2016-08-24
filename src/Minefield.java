@@ -120,7 +120,7 @@ public class Minefield {
 						keepUncovering(row, column - 1);
 					}
 				
-					if ((column + 1) <= columnTotal) {
+					if ((column + 1) < columnTotal) {
 						keepUncovering(row, column + 1);
 					}
 			} else
@@ -151,28 +151,90 @@ public class Minefield {
 	}
 	
 	public void printField() {
-		for (int row = 0; row < rowTotal; row++ ) {
-			for (int column = 0; column < columnTotal; column++) {
+		System.out.println();
+		for (int row = -1; row < rowTotal; row++ ) {
+			for (int column = -1; column < columnTotal; column++) {
+				if (row == -1 && column == -1) {
+					System.out.print("   ");
+					continue;
+				}
+				
+				if (row == -1 && column < 9) {
+					System.out.print(" 0" + (column + 1) + " ");
+					continue;
+				} else if (row == -1) {
+					System.out.print(" " + (column + 1) + " ");
+					continue;
+				}
+				
+				if (column == -1 && row < 9) {
+					System.out.print("0" + (row + 1) + " ");
+					continue;
+				} else if (column == -1) {
+					System.out.print((row + 1) + " ");
+					continue;
+				}
+				
 				if (grid[row][column].getCovered()) {
-					System.out.print("[\u2588]");
+					System.out.print("[\u2588\u2588]");
 				} else if (grid [row][column].getFlag()) {
-					System.out.print("[\u2020]");
+					System.out.print("[ \u2020]");
 				} else if (grid [row][column].getMine()) {
-					System.out.print("[X]");
+					System.out.print("[XX]");
 				} else if (grid [row][column].getMineCount() == 0) {
-					System.out.print("[ ]");
+					System.out.print("[  ]");
 				} else if (grid [row][column].getMineCount() != 0 ) {
-					System.out.print("[" + grid [row][column].getMineCount() + "]");
+					System.out.print("[ " + grid [row][column].getMineCount() + "]");
 				}
 			}	
 			System.out.println();
 		}
+		System.out.println();
 	}
+	
+	public boolean checkForWin() {
+		
+		
+		
+		return true;
+	}
+	
+	
+//	public void newPrintField() {
+//		for (int row = 0; row < rowTotal; row++ ) {
+//			for (int column = 0; column <= columnTotal; column++) {
+//				if (column == 0 && row == 0) {
+//					System.out.print("\u2554");
+//				} else if (column == (columnTotal) && row == 0) {
+//					System.out.print("\u2550" + "\u2557");
+//					continue;
+//				} else if (row == 0) {
+//					System.out.print("\u2550" + "\u2566");
+//				}
+//				System.out.print("\u2551");
+//				if (grid[row][column].getCovered()) {
+//					System.out.print("\u2588");
+//				} else if (grid [row][column].getFlag()) {
+//					System.out.print("\u2020");
+//				} else if (grid [row][column].getMine()) {
+//					System.out.print("X");
+//				} else if (grid [row][column].getMineCount() == 0) {
+//					System.out.print(" ");
+//				} else if (grid [row][column].getMineCount() != 0 ) {
+//					System.out.print(grid [row][column].getMineCount());
+//				}
+//				if (column == (columnTotal) {
+//					
+//				}
+//				
+//				
+//			}
+//		}
+//	}
+	
+}
 	
 	//print field
 	//uncover method - continually uncover adjacent cells until it hits a cell with a count
 	//show all mines
 	//
-	
-	
-}
