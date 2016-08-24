@@ -19,6 +19,6 @@ public class MinefieldAppTest {
  */
 	@Test
 	public void test1() {
-		assertEquals("1", Square.getFizzBuzz(1));
+		assertEquals("1", (1));
 	}
 }
