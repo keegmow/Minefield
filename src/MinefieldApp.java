@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class MinefieldApp {
 
 	public static void main(String[] args) {
@@ -37,14 +38,10 @@ public class MinefieldApp {
 		Minefield gameGrid = new Minefield(row, column, mineTotal);
 		String play;
 			do {
-				System.out.print("Please insert a row between 1 - " + row + ": ");
-				String rowGuess = scan.nextLine();
-				int rowInt = Integer.parseInt(rowGuess) - 1;
-				System.out.print("Please insert a column between 1 - " + column + ": ");
-				String columnGuess = scan.nextLine();
-				int columnInt = Integer.parseInt(columnGuess) - 1;
-				System.out.print("Do you want to flag the cell or uncover it? (type \"flag\"): ");
-				boolean flag = scan.nextLine().equalsIgnoreCase("flag");
+				int columnInt = Validator.getInt(scan, "Please insert a column between 1 - " + column + ": ", 1, column)-1;
+				int rowInt = Validator.getInt(scan, "Please insert a row between 1 - " + row + ": ", 1, row)-1;
+				System.out.print("Do you want to flag/unflag the cell? (type y/n)");
+				boolean flag = scan.nextLine().equalsIgnoreCase("y");
 				play = gameGrid.uncoverSquare(rowInt, columnInt, flag);
 				gameGrid.printField();
 			}while (play.equalsIgnoreCase("cont"));
@@ -58,7 +55,7 @@ public class MinefieldApp {
 			System.out.println("Ouch you hit a bomb! you lose");
 		}
 		System.out.println("Would you like to play again (y/n)");
-		scan.nextLine();
+		again = scan.nextLine();
 		}
 		System.out.println("Thank You for Playing");
 
