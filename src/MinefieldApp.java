@@ -48,13 +48,19 @@ public class MinefieldApp {
 			
 		if (play.equalsIgnoreCase("Win"))
 		{
-			System.out.println("CONGRATULATIONS you have won!!");
+			System.out.println("*******************************");
+			System.out.println("CONGRATULATIONS, you have won!!");
+			System.out.println("*******************************");
+
 		}
 		if (play.equalsIgnoreCase("Loss"))
 		{
-			System.out.println("Ouch you hit a bomb! you lose");
+			System.out.println("*******************************");
+			System.out.println("Ouch, you hit a bomb! You lose!");
+			System.out.println("*******************************");
 		}
-		System.out.println("Would you like to play again (y/n)");
+		System.out.println();
+		System.out.print("Would you like to play again (y/n): ");
 		again = scan.nextLine();
 		}
 		System.out.println("Thank You for Playing");
