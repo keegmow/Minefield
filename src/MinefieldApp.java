@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class MinefieldApp {
 
 	public static void main(String[] args) {
@@ -12,8 +11,13 @@ public class MinefieldApp {
 		String again = "y";
 		while (again.equalsIgnoreCase("y") || again.equalsIgnoreCase("yes"))
 		{
-		System.out.println("Please select difficulty : Beginner(B)/ Intermediate(I) / Expert (E)");
+		System.out.printf("Please select difficulty:%n"
+							+ " - Beginner (B)%n"
+							+ " - Intermediate (I)%n"
+							+ " - Expert (E)%n"
+							+ "Choice: ");
 		String level = scan.nextLine();
+		System.out.println();
 		if (level.equalsIgnoreCase("B"))
 		{
 			row = 9;
@@ -33,15 +37,17 @@ public class MinefieldApp {
 			mineTotal = 99;
 			System.out.println("There are 99 mine to flag, Good Luck!");
 		} else {
-			System.out.println("Incorrect option. Try again later.");
+			System.out.println("Incorrect option. Try again later. ☮");
 			return;
 		}
 		Minefield gameGrid = new Minefield(row, column, mineTotal);
 		String play;
+//		gameGrid.uncoverAllSquare(); //test
+		gameGrid.printField();
 			do {
 				int columnInt = Validator.getInt(scan, "Select a column between 1 - " + column + ": ", 1, column)-1;
 				int rowInt = Validator.getInt(scan, "Select a row between 1 - " + row + ": ", 1, row)-1;
-				System.out.print("Do you want to flag/unflag the cell? (type y/n)");
+				System.out.print("Do you want to flag/unflag the cell? (type y/n): ");
 				boolean flag = scan.nextLine().equalsIgnoreCase("y");
 				play = gameGrid.uncoverSquare(rowInt, columnInt, flag);
 				gameGrid.printField();
@@ -65,10 +71,6 @@ public class MinefieldApp {
 		again = scan.nextLine();
 		}
 		System.out.println("Thank You for Playing");
-
-//		gameGrid.uncoverAllSquare(); //test
-//		gameGrid.printField();  //test
 		scan.close();
 	}
-
 }

@@ -16,69 +16,65 @@ public class Minefield {
 		grid = new Square[rowTotal][columnTotal];
 		for (int row = 0; row < rowTotal; row++) {
 			for (int column = 0; column < columnTotal; column++) {
-				grid [row][column] = new Square(row,column);
+				grid [row][column] = new Square();
 			}
 		}
 		randomizeMines();
 		countMine();
 	}
 	
-	public boolean checkMinefield(int row, int column) {
-		return (grid[row][column].getMine());
-	}
-	
 	private void countMine() {
 		for (int row = 0; row < rowTotal; row++) {
 			for (int column = 0; column < columnTotal; column++) {
 				int mineCount = 0;
-				try {
-					if (grid[row - 1][column - 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row - 1][column].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row - 1][column + 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row][column - 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row][column + 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row + 1][column - 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row + 1][column].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
-				try {
-					if (grid[row + 1][column + 1].getMine())
-						mineCount++;
-				} catch (Exception e) {
-					;
-				}
+				
+					if (row - 1 >= 0 && column - 1 >= 0) {
+						if (grid[row - 1][column - 1].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (row - 1 >= 0) {
+						if (grid[row - 1][column].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (row - 1 >= 0 && column + 1 < columnTotal) {
+						if (grid[row - 1][column + 1].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (column - 1 >= 0) {
+						if (grid[row][column - 1].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (column + 1 < columnTotal) {
+						if (grid[row][column + 1].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (row + 1 < rowTotal && column - 1 >= 0) {
+						if (grid[row + 1][column - 1].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (row + 1 < rowTotal) {
+						if (grid[row + 1][column].getMine()) {
+							mineCount++;
+						}
+					}
+					
+					if (row + 1 < rowTotal && column + 1 < columnTotal) {
+						if (grid[row + 1][column + 1].getMine())
+							mineCount++;
+					}
+					
 				grid[row][column].setMineCount(mineCount);
 			}
 		}
@@ -90,10 +86,12 @@ public class Minefield {
 			if (grid[row][column].getFlag()) {
 				grid[row][column].setFlag(false);
 				grid[row][column].setCovered(true);
+			} else if (!grid[row][column].getCovered()) {
+				System.out.println("That square cannot be flagged.");
 			} else {
 				grid[row][column].setFlag(true);
 				grid[row][column].setCovered(false);
-			}
+			} 
 			return cont;
 		} else if (grid[row][column].getMine()) {
 			grid[row][column].setCovered(false);
@@ -159,7 +157,7 @@ public class Minefield {
 			return;
 	}
 	
-	public void uncoverAllSquare() {
+	public void uncoverAllSquare() { // used for test purposes
 		for (int row = 0; row < rowTotal; row++) {
 			for(int column = 0; column < columnTotal; column++) {
 				grid[row][column].setCovered(false);
@@ -169,13 +167,17 @@ public class Minefield {
 	
 	private void randomizeMines() {
 		for (int i = 0; i < mineTotal; i++) {
-			int rowRandom =(int) (Math.random() * rowTotal);
-			int columnRandom = (int) (Math.random() * columnTotal);
-			if (grid[rowRandom][columnRandom].getMine()){
-				continue;
-			} else {
-				grid[rowRandom][columnRandom].setMine(true);
-			}
+			boolean noRandom = true;
+			do {
+				int rowRandom = (int) (Math.random() * rowTotal);
+				int columnRandom = (int) (Math.random() * columnTotal);
+				if (grid[rowRandom][columnRandom].getMine()) {
+					continue;
+				} else {
+					grid[rowRandom][columnRandom].setMine(true);
+					noRandom = false;
+				} 
+			} while (noRandom);
 		}
 	}
 	
@@ -207,11 +209,11 @@ public class Minefield {
 				if (grid[row][column].getCovered()) {
 					System.out.print("[\u2588\u2588]");
 				} else if (grid [row][column].getFlag()) {
-					System.out.print("[!!]");
+					System.out.print("(!!)");
 				} else if (grid [row][column].getMine()) {
-					System.out.print("[XX]");
+					System.out.print("(XX)");
 				} else if (grid [row][column].getMineCount() == 0) {
-					System.out.print("[  ]");
+					System.out.print("  . ");
 				} else if (grid [row][column].getMineCount() != 0 ) {
 					System.out.print("[ " + grid [row][column].getMineCount() + "]");
 				}
@@ -251,43 +253,4 @@ public class Minefield {
 			}
 		}
 	}
-	
-	
-//	public void newPrintField() {
-//		for (int row = 0; row < rowTotal; row++ ) {
-//			for (int column = 0; column <= columnTotal; column++) {
-//				if (column == 0 && row == 0) {
-//					System.out.print("\u2554");
-//				} else if (column == (columnTotal) && row == 0) {
-//					System.out.print("\u2550" + "\u2557");
-//					continue;
-//				} else if (row == 0) {
-//					System.out.print("\u2550" + "\u2566");
-//				}
-//				System.out.print("\u2551");
-//				if (grid[row][column].getCovered()) {
-//					System.out.print("\u2588");
-//				} else if (grid [row][column].getFlag()) {
-//					System.out.print("\u2020");
-//				} else if (grid [row][column].getMine()) {
-//					System.out.print("X");
-//				} else if (grid [row][column].getMineCount() == 0) {
-//					System.out.print(" ");
-//				} else if (grid [row][column].getMineCount() != 0 ) {
-//					System.out.print(grid [row][column].getMineCount());
-//				}
-//				if (column == (columnTotal) {
-//					
-//				}
-//				
-//				
-//			}
-//		}
-//	}
-	
 }
-	
-	//print field
-	//uncover method - continually uncover adjacent cells until it hits a cell with a count
-	//show all mines
-	//
